@@ -10,14 +10,16 @@ body {
     font-family: 'Kalam', cursive;
 }
 
-header {
+.buttonContainer {
     background: #7BBCF2;
     text-align: center;
-    padding: 50px;
-    font-size: 40px;
+}
+
+.title {
+    font-size: 44px;
     font-weight: bold;
     color: #4C331E;
-    border-bottom: #417DAD solid 5px;
+    padding: 30px;
 }
 
 .buttonStyle {
@@ -31,10 +33,10 @@ header {
 }
 
 .loginBtn {
-    margin-top: 60px;
+    box-shadow: 4px 4px #D69B35;
 }
 
 .createAcctBtn {
-    margin-top: 30px;
+    box-shadow: 4px 4px #D69B35;
 }
 
