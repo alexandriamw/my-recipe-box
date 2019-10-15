@@ -6,6 +6,10 @@ html {
     background-size: cover;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Kalam', cursive;
 }
@@ -13,6 +17,8 @@ body {
 .buttonContainer {
     background: #7BBCF2;
     text-align: center;
+    max-width: 500px;
+    height: fit-content;
 }
 
 .title {
