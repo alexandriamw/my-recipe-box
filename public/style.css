@@ -1,0 +1,40 @@
+html {
+    background: url(images/cookies.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
+    font-family: 'Kalam', cursive;
+}
+
+header {
+    background: #7BBCF2;
+    text-align: center;
+    padding: 50px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #4C331E;
+    border-bottom: #417DAD solid 5px;
+}
+
+.buttonStyle {
+    background: #F4B74E;
+    font-family: 'Kalam', cursive;
+    font-size: 28px;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    color: #4C331E;
+}
+
+.loginBtn {
+    margin-top: 60px;
+}
+
+.createAcctBtn {
+    margin-top: 30px;
+}
+
