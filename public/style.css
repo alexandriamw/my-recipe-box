@@ -14,11 +14,18 @@ body {
     font-family: 'Kalam', cursive;
 }
 
-.buttonContainer {
+header {
     background: #7BBCF2;
     text-align: center;
-    max-width: 500px;
-    height: fit-content;
+    font-size: 40px;
+    font-weight: bold;
+    color: #4C331E;
+    border-bottom: #417DAD solid 5px;
+}
+
+.buttonContainer {
+    text-align: center;
+    margin-top: 50px;
 }
 
 .title {
@@ -36,13 +43,17 @@ body {
     border-radius: 8px;
     padding: 10px 15px;
     color: #4C331E;
+    cursor: pointer;
+    box-shadow: 4px 4px #D69B35;
 }
 
 .loginBtn {
-    box-shadow: 4px 4px #D69B35;
+    display: block;
+    margin: 0 auto;
 }
 
 .createAcctBtn {
-    box-shadow: 4px 4px #D69B35;
+    margin: 16px auto 0;
+    display: block;
 }
 
