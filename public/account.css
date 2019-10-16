@@ -13,6 +13,7 @@ html {
     border-radius: 6px;
     height: fit-content;
     padding-bottom: 20px;
+    border: 4px solid #417DAD;
 }
 
 h1 {

@@ -43,6 +43,18 @@ header {
     box-shadow: 4px 4px #D69B35;
 }
 
+.smallerBtn {
+    background: #F4B74E;
+    font-family: 'Kalam', cursive;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    color: #4C331E;
+    cursor: pointer;
+    box-shadow: 2px 2px #D69B35;
+}
+
 .loginBtn {
     display: block;
     margin: 0 auto;

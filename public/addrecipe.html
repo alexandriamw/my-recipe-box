@@ -9,72 +9,54 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="addrecipe.css">
     <link href="https://fonts.googleapis.com/css?family=Kalam&display=swap" rel="stylesheet">
-
     <title>My Recipe Box</title>
 </head>
 
 <body>
-    <div>
-        <header>
-            <h1 class="title">Add a Recipe</h1>
-        </header>
+    <header>
+        <h1 class="title">Add a Recipe</h1>
+    </header>
 
-        <div class="addRecipe">
-            <form class="addRecipeForm">
+    <div class="addRecipe">
+        <form class="addRecipeForm">
+            <div>
+                <h3>Recipe Name</h3>
+                <input type="text" name="recipename" required>
+            </div>
+
+            <div>
+                <h3>Category</h3>
+                <select>
+                    <option value="appetizers">Appetizers</option>
+                    <option value="bakedgoods">Baked Goods</option>
+                    <option value="breakfast">Breakfast</option>
+                    <option value="dessert">Dessert</option>
+                    <option value="drinks">Drinks</option>
+                    <option value="maindish">Main Dish</option>
+                    <option value="salad">Salad</option>
+                    <option value="sidedish">Side Dish</option>
+                    <option value="soupstew">Soups and Stews</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div>
+                <h3>Ingredients</h3>
                 <div>
-                    <h3>Recipe Name</h3>
-                    <input type="text" name="recipename" required>
+                    <input id="ingredient" type="text" placeholder="1 tsp cinnamon" name="ingredient">
                 </div>
+                <button class="addIngBtn" type="button">add another ingredient</button>
+            </div>
 
-                <div>
-                    <h3>Category</h3>
-                    <select>
-                        <option value="appetizers">Appetizers</option>
-                        <option value="bakedgoods">Baked Goods</option>
-                        <option value="breakfast">Breakfast</option>
-                        <option value="dessert">Dessert</option>
-                        <option value="drinks">Drinks</option>
-                        <option value="maindish">Main Dish</option>
-                        <option value="salad">Salad</option>
-                        <option value="sidedish">Side Dish</option>
-                        <option value="soupstew">Soups and Stews</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-
-                <div>
-                    <h3>Ingredients</h3>
-                    <div class="ingrBox">
-                        <div>
-                            <label for="quantity">Quantity</label>
-                            <input id="quantity" type="text" placeholder="example: 2" name="quantity">
-                        </div>
-
-                        <div>
-                            <label for="measurement">Measurement</label>
-                            <input id="measurement" type="text" placeholder="example: cloves" name="measurement">
-                        </div>
-
-                        <div>
-                            <label for="ingredient">Ingredient</label>
-                            <input id="ingredient" type="text" placeholder="example: garlic" name="ingredient">
-                        </div>
-
-                        <div>
-                            <label for="prep">Prep</label>
-                            <input id="prep" type="text" placeholder="example: minced" name="prep">
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <h3>Preparation Steps</h3>
-                    <textarea></textarea>
-                </div>
-
-            </form>
-        </div>
+            <div>
+                <h3>Preparation Steps</h3>
+                <textarea></textarea>
+            </div>
+            <button class="smallerBtn" type="submit">Save my Recipe</button>
+            <button class="smallerBtn" type="button">Cancel</button>
+        </form>
     </div>
+
 </body>
 
 </html>
