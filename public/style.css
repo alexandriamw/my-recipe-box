@@ -53,6 +53,11 @@ header {
     display: block;
 }
 
+input {
+    border-radius: 5px;
+    padding: 5px;
+}
+
 
 
 
