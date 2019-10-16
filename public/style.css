@@ -21,11 +21,7 @@ header {
     font-weight: bold;
     color: #4C331E;
     border-bottom: #417DAD solid 5px;
-}
-
-.buttonContainer {
-    text-align: center;
-    margin-top: 50px;
+    margin-bottom: 30px;
 }
 
 .title {
@@ -56,4 +52,8 @@ header {
     margin: 16px auto 0;
     display: block;
 }
+
+
+
+
 

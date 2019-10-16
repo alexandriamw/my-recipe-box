@@ -1,0 +1,25 @@
+.loginForm {
+    background: #417DAD;
+    margin-top: 50px;
+    color: #f9fbff;
+    text-align: center;
+    padding: 30px 0;
+    font-size: 28px;
+    max-width: 320px;
+    margin: 0 auto;
+    border-radius: 4px;
+    box-shadow: 4px 4px 0 #2A5070;
+}
+
+.loginBtn {
+    margin-top: 20px;
+}
+
+.cancelBtn {
+    margin-top: 16px;
+}
+
+input {
+    border-radius: 5px;
+    padding: 5px;
+}
