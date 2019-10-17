@@ -53,6 +53,7 @@ header {
     color: #4C331E;
     cursor: pointer;
     box-shadow: 2px 2px #D69B35;
+    margin-top: 8px;
 }
 
 .loginBtn {
