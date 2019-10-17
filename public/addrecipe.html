@@ -13,50 +13,54 @@
 </head>
 
 <body>
-    <header>
-        <h1 class="title">Add a Recipe</h1>
-    </header>
+    <div class="content">
+        <header>
+            <h1 class="title">Add a Recipe</h1>
+        </header>
 
-    <div class="addRecipe">
-        <form class="addRecipeForm">
-            <div>
-                <h3>Recipe Name</h3>
-                <input type="text" name="recipename" required>
-            </div>
-
-            <div>
-                <h3>Category</h3>
-                <select>
-                    <option value="appetizers">Appetizers</option>
-                    <option value="bakedgoods">Baked Goods</option>
-                    <option value="breakfast">Breakfast</option>
-                    <option value="dessert">Dessert</option>
-                    <option value="drinks">Drinks</option>
-                    <option value="maindish">Main Dish</option>
-                    <option value="salad">Salad</option>
-                    <option value="sidedish">Side Dish</option>
-                    <option value="soupstew">Soups and Stews</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
-
-            <div>
-                <h3>Ingredients</h3>
+        <div class="addRecipe">
+            <form class="addRecipeForm">
                 <div>
-                    <input id="ingredient" type="text" placeholder="1 tsp cinnamon" name="ingredient">
+                    <h3>Recipe Name</h3>
+                    <input type="text" name="recipename" required>
                 </div>
-                <button class="addIngBtn" type="button">add another ingredient</button>
-            </div>
 
-            <div>
-                <h3>Preparation Steps</h3>
-                <textarea></textarea>
-            </div>
-            <button class="smallerBtn" type="submit">Save my Recipe</button>
-            <button class="smallerBtn" type="button">Cancel</button>
-        </form>
+                <div>
+                    <h3>Category</h3>
+                    <select>
+                        <option value="appetizers">Appetizers</option>
+                        <option value="bakedgoods">Baked Goods</option>
+                        <option value="breakfast">Breakfast</option>
+                        <option value="dessert">Dessert</option>
+                        <option value="drinks">Drinks</option>
+                        <option value="maindish">Main Dish</option>
+                        <option value="salad">Salad</option>
+                        <option value="sidedish">Side Dish</option>
+                        <option value="soupstew">Soups and Stews</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div>
+                    <h3>Ingredients</h3>
+                    <div>
+                        <input id="ingredient" type="text" placeholder="1 tsp cinnamon" name="ingredient">
+                    </div>
+                    <button class="addIngBtn" type="button">add another ingredient</button>
+                </div>
+
+                <div>
+                    <h3>Preparation Steps</h3>
+                    <textarea></textarea>
+                </div>
+                <button class="smallerBtn" type="submit">Save my Recipe</button>
+                <button class="smallerBtn" type="button">Cancel</button>
+            </form>
+        </div>
     </div>
-
+    <footer class="footer">
+        <p><img src="images/cookie.png"> &copy; 2019 Alexandria Wagner</p>
+    </footer>
 </body>
 
 </html>

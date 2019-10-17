@@ -4,6 +4,8 @@ html {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    height: 100%;
+    margin: 0;
 }
 
 * {
@@ -12,6 +14,12 @@ html {
 
 body {
     font-family: 'Kalam', cursive;
+    height: 100%;
+    margin: 0;
+}
+
+.content {
+    min-height: 100%;
 }
 
 header {
@@ -71,7 +79,16 @@ input {
     padding: 5px;
 }
 
+.footer {
+    background: #7BBCF2;
+    height: 60px;
+    margin-top: -60px;
+    text-align: center;
+    border-top: #417DAD solid 3px;
+}
 
-
-
-
+img {
+    margin-top: 10px;
+    width: 40px;
+    height: auto;
+}
