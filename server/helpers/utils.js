@@ -28,6 +28,7 @@ module.exports = {
         user: CONSTANTS.MYSQL_USER,
         password: CONSTANTS.MYSQL_PASS,
         database: CONSTANTS.MYSQL_DB,
+        port: 8889,
         insecureAuth: !CONSTANTS.IS_PRODUCTION,
         ssl: {
           rejectUnauthorized: CONSTANTS.IS_PRODUCTION
@@ -40,9 +41,9 @@ module.exports = {
       throw error;
     }
   },
-  queryWrapper: function (pool, sql, params) {
-    return new Promise((resolve, reject) => {
-      pool.query(sql, params, (error, results) => {
+  query: function (connection, sql, params) {
+    return new Promise(function (resolve, reject) {
+      connection.query(sql, params, function (error, results) {
         if (error) {
           reject(error);
         }

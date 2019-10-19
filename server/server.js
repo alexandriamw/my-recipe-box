@@ -12,14 +12,17 @@ const Strategy = require("passport-local").Strategy;
 // App-specific
 const CONSTANTS = require("./helpers/constants");
 const utils = require("./helpers/utils");
+const validators = require("./helpers/validators");
 
-// Create a database pool
-const pool = utils.createMysqlPool();
+// Queries
+const registerSql = require("./queries/register");
+
+// Database connection
+const dbConnection = utils.createMysqlPool();
 
 passport.use(new Strategy({
   usernameField: "email"
 }, function (email, password, callback) {
-  
 }));
 
 passport.serializeUser(function (user, callback) {
@@ -27,7 +30,6 @@ passport.serializeUser(function (user, callback) {
 });
 
 passport.deserializeUser(function (id, callback) {
-  
 });
 
 // Init express app
@@ -71,7 +73,50 @@ app.listen(port, function () {
 
   app.get("/register", function(req, res) {
     res.render("register");
-  })
+  });
+
+  app.post("/register", function(req, res) {
+    let clean = {};
+
+    if(!validators.isValidEmail(req.body.email)) {
+      res.render("registerpost", {
+        message: "That's not a valid email address."
+      });
+
+      return;
+    }
+
+    clean.email = req.body.email;
+    
+    if(!validators.isValidPassword(req.body.password)) {
+      res.render("registerpost", {
+        message: "Please enter a password."
+      });
+
+      return;
+    }
+
+    utils.hashItem(req.body.password).then(function(hashedItem) {
+      clean.password = hashedItem;
+      const params = [clean.email, clean.password];
+
+      utils.query(dbConnection, registerSql, params).then(function() {
+        res.render("registerpost", {
+          message: "User registered! You can now log in."
+        });
+      }).catch(function(error) {
+        res.render("registerpost", {
+          message: "Couldn't create user: " + error
+        });
+      })
+    }).catch(function(error) {
+      res.render("registerpost", {
+        message: "Couldn't hash password."
+      });
+    });
+
+    return;
+  });
 });
 
 
