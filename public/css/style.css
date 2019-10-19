@@ -49,6 +49,8 @@ header {
     color: #4C331E;
     cursor: pointer;
     box-shadow: 4px 4px #D69B35;
+    text-align: center;
+    text-decoration: none;
 }
 
 .smallerBtn {
@@ -91,4 +93,9 @@ img {
     margin-top: 10px;
     width: 40px;
     height: auto;
+}
+
+.buttonContainer {
+    max-width: 320px;
+    margin: 0 auto;
 }
