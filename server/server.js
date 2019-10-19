@@ -5,9 +5,8 @@ const expressHandlebars = require("express-handlebars");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const flash = require("connect-flash");
 const passport = require("passport");
-const Strategy = require("passport-local").Strategy;
+const LocalStrategy = require("passport-local").Strategy;
 
 // App-specific
 const CONSTANTS = require("./helpers/constants");
@@ -16,20 +15,54 @@ const validators = require("./helpers/validators");
 
 // Queries
 const registerSql = require("./queries/register");
+const getUserByEmailSql = require("./queries/getUserByEmail");
+const getUserByIdSql = require("./queries/getUserById");
 
 // Database connection
 const dbConnection = utils.createMysqlPool();
 
-passport.use(new Strategy({
+passport.use(new LocalStrategy({
   usernameField: "email"
 }, function (email, password, callback) {
+  const params = [email];
+
+  utils.query(dbConnection, getUserByEmailSql, params).then(function (results) {
+    const user = results[0];
+
+    if (!user) {
+      return callback(null, false);
+    }
+
+    utils.compareItem(password, user.password).then(function(result) {
+      if (result) {
+        return callback(null, user);
+      }
+
+      return callback(null, false);
+    }).catch(function (error) {
+      return callback(error);
+    });
+  }).catch(function (error) {
+    return callback(error);
+  });
 }));
 
 passport.serializeUser(function (user, callback) {
-  // callback(null, user.id);
+  callback(null, user.id);
 });
 
 passport.deserializeUser(function (id, callback) {
+  const params = [id];
+
+  utils.query(dbConnection, getUserByIdSql, params).then(function (results) {
+    const user = results[0];
+
+    if (!user) {
+      return callback(null, false);
+    }
+
+    callback(null, user);
+  });
 });
 
 // Init express app
@@ -57,7 +90,6 @@ app.use(session({
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-app.use(flash());
 
 // Initialize passport and restore authentication state.
 app.use(passport.initialize());
@@ -67,14 +99,29 @@ app.use(passport.session());
 const port = CONSTANTS.IS_PRODUCTION ? "80" : "8080";
 
 app.listen(port, function () {
+  // Home
   app.get("/", function (req, res) {
+    if (req.user) {
+      res.redirect("/account");
+
+      return;
+    }
+
     res.render("home");
   });
 
+  // Register
   app.get("/register", function(req, res) {
+    if (req.user) {
+      res.redirect("/account");
+
+      return;
+    }
+
     res.render("register");
   });
 
+  // Register (submit)
   app.post("/register", function(req, res) {
     let clean = {};
 
@@ -87,7 +134,7 @@ app.listen(port, function () {
     }
 
     clean.email = req.body.email;
-    
+
     if(!validators.isValidPassword(req.body.password)) {
       res.render("registerpost", {
         message: "Please enter a password."
@@ -101,9 +148,7 @@ app.listen(port, function () {
       const params = [clean.email, clean.password];
 
       utils.query(dbConnection, registerSql, params).then(function() {
-        res.render("registerpost", {
-          message: "User registered! You can now log in."
-        });
+        res.redirect("/login");
       }).catch(function(error) {
         res.render("registerpost", {
           message: "Couldn't create user: " + error
@@ -117,6 +162,39 @@ app.listen(port, function () {
 
     return;
   });
+
+  // Login
+  app.get("/login", function (req, res) {
+    if (req.user) {
+      res.redirect("/account");
+
+      return;
+    }
+
+    res.render("login");
+  });
+
+  // Login (submit)
+  app.post("/login", passport.authenticate("local", {
+    failureRedirect: "/login"
+  }), function (req, res) {
+    if (req.user) {
+      res.redirect("/account");
+
+      return;
+    }
+
+    res.redirect("/register");
+  });
+
+  // Recipe list
+  app.get("/account", function (req, res) {
+    if (!req.user) {
+      res.redirect("/login");
+
+      return;
+    }
+
+    res.render("account");
+  })
 });
-
-

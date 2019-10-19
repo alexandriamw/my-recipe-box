@@ -1,8 +1,8 @@
-<link rel="stylesheet" href="/css/register.css">
+<link rel="stylesheet" href="/css/login.css">
 
-<div class="registerForm">
+<div class="loginForm">
     {{message}}
-    <form method="POST" action="/register">
+    <form action="/login" method="POST">
         <div>
             <label for="email"><b>Email</b></label>
             <input type="email" placeholder="Enter Email" name="email" required>
@@ -10,9 +10,9 @@
 
         <div>
             <label class="password" for="password"><b>Password</b></label>
-            <input type="password" placeholder="Pick a Password" name="password" required>
+            <input type="password" placeholder="Enter Password" name="password" required>
         </div>
 
-        <button type="submit" class="signupBtn buttonStyle">Sign Up</button>
+        <button type="submit" class="loginBtn buttonStyle">Login</button>
     </form>
 </div>

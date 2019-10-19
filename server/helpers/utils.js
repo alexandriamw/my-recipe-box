@@ -28,7 +28,7 @@ module.exports = {
         user: CONSTANTS.MYSQL_USER,
         password: CONSTANTS.MYSQL_PASS,
         database: CONSTANTS.MYSQL_DB,
-        port: 8889,
+        // port: 8889,
         insecureAuth: !CONSTANTS.IS_PRODUCTION,
         ssl: {
           rejectUnauthorized: CONSTANTS.IS_PRODUCTION
