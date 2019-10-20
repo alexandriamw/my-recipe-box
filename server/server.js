@@ -196,5 +196,27 @@ app.listen(port, function () {
     }
 
     res.render("account");
-  })
+  });
+
+  app.get("/addrecipe", function (req, res) {
+    // if (!req.user) {
+    //   res.redirect("/login");
+
+    //   return;
+    // }
+
+    res.render("addrecipe");
+  });
+
+  app.get("/recipedetail", function (req, res) {
+    // if (!req.user) {
+    //   res.redirect("/login");
+
+    //   return;
+    // }
+
+    res.render("recipedetail");
+  });
 });
+
+
