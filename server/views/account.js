@@ -4,7 +4,7 @@ module.exports = function () {
   return (
     <>
       <link rel="stylesheet" href="/css/account.css" />
-      <button type="button" className="addRecBtn buttonStyle">Add a Recipe</button>
+      <a href="/addrecipe" className="addRecBtn buttonStyle">Add a Recipe</a>
       <div className="recipeList">
           <h1>My Saved Recipes</h1>
       </div>

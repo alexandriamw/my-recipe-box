@@ -19,3 +19,9 @@
     display: block;
     margin: 16px auto;
 }
+
+input {
+    margin-left: 4px;
+    margin-top: 9px;
+    padding-top: 8px;
+}

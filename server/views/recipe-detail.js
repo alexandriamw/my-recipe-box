@@ -27,7 +27,7 @@ module.exports = function () {
         <div className="recDetailBtns">
           <button className="smallerBtn" type="button">Edit Recipe</button>
           <button className="smallerBtn" type="button">Delete Recipe</button>
-          <button className="smallerBtn" type="button">Back to Account</button>
+          <a href="/account" className="smallerBtn" type="button">Back to Account</a>
         </div>
       </div>
     </>

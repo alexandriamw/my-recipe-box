@@ -67,7 +67,8 @@ module.exports = {
             ${htmlString}
           </div>
           <footer class="footer">
-            <p><img src="/images/cookie.png"> &copy; 2019 Alexandria Wagner</p>
+          <img src="/images/cookie.png">
+            <p> &copy; 2019 Alexandria Wagner</p>
           </footer>
         </body>
       </html>

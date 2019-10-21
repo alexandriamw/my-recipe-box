@@ -18,3 +18,9 @@
 .cancelBtn {
     margin-top: 16px;
 }
+
+input {
+    margin-left: 4px;
+    margin-top: 9px;
+    padding-top: 8px;
+}
