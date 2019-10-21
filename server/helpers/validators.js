@@ -9,8 +9,5 @@ module.exports = {
   },
   isNotEmpty: function (item) {
     return item.length > 0;
-  },
-  isNumber: function (item) {
-    return /^\d+$/.test(item);
   }
 };

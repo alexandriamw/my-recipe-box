@@ -28,14 +28,7 @@ module.exports = {
         user: CONSTANTS.MYSQL_USER,
         password: CONSTANTS.MYSQL_PASS,
         database: CONSTANTS.MYSQL_DB,
-        // port: 8889,
-        insecureAuth: !CONSTANTS.IS_PRODUCTION,
-        ssl: {
-          rejectUnauthorized: CONSTANTS.IS_PRODUCTION
-        },
-        flags: {
-          SECURE_CONNECTION: CONSTANTS.IS_PRODUCTION
-        }
+        port: 8889
       });
     } catch (error) {
       throw error;
@@ -51,5 +44,33 @@ module.exports = {
         resolve(results);
       });
     });
+  },
+  html: function (htmlString) {
+    return `
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="an app to catalog your recipes" />
+        <link rel="stylesheet" href="/css/reset.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/login.css">
+        <link href="https://fonts.googleapis.com/css?family=Kalam&display=swap" rel="stylesheet">
+        <title>My Recipe Box</title>
+        </head>
+        <body>
+          <div class="content">
+            <header>
+              <h1 class="title">My Recipe Box</h1>
+            </header>
+            ${htmlString}
+          </div>
+          <footer class="footer">
+            <p><img src="/images/cookie.png"> &copy; 2019 Alexandria Wagner</p>
+          </footer>
+        </body>
+      </html>
+    `;
   }
 };

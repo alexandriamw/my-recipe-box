@@ -8,16 +8,22 @@
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
-    "express-handlebars": "^3.1.0",
     "express-session": "^1.17.0",
     "mysql": "^2.17.1",
     "passport": "^0.4.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2"
   },
   "scripts": {
-    "dev": "npx nodemon ./server/server.js"
+    "dev": "npx nodemon --exec babel-node ./server/server.js"
   },
   "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/node": "^7.6.3",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
     "eslint": "^6.5.1",
     "nodemon": "^1.19.4"
   }

@@ -1,22 +1,32 @@
 // Dependencies
 const express = require("express");
 const path = require("path");
-const expressHandlebars = require("express-handlebars");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const React = require("react");
+const ReactDOMServer = require("react-dom/server");
 
 // App-specific
 const CONSTANTS = require("./helpers/constants");
 const utils = require("./helpers/utils");
 const validators = require("./helpers/validators");
 
+// Views
+const AccountView = require("./views/account");
+const AddRecipeView = require("./views/add-recipe");
+const HomeView = require("./views/home");
+const LoginView = require("./views/login");
+const RecipeDetailView = require("./views/recipe-detail");
+const RegisterView = require("./views/register");
+
 // Queries
 const registerSql = require("./queries/register");
-const getUserByEmailSql = require("./queries/getUserByEmail");
-const getUserByIdSql = require("./queries/getUserById");
+const getUserByEmailSql = require("./queries/get-user-by-email");
+const getUserByIdSql = require("./queries/get-user-by-id");
+const addRecipeSql = require("./queries/add-recipe");
 
 // Database connection
 const dbConnection = utils.createMysqlPool();
@@ -33,7 +43,7 @@ passport.use(new LocalStrategy({
       return callback(null, false);
     }
 
-    utils.compareItem(password, user.password).then(function(result) {
+    utils.compareItem(password, user.password).then(function (result) {
       if (result) {
         return callback(null, user);
       }
@@ -67,7 +77,6 @@ passport.deserializeUser(function (id, callback) {
 
 // Init express app
 const app = express();
-app.engine("handlebars", expressHandlebars());
 app.set("view engine", "handlebars");
 
 // Static content paths
@@ -107,28 +116,26 @@ app.listen(port, function () {
       return;
     }
 
-    res.render("home");
+    res.send(utils.html(ReactDOMServer.renderToString(<HomeView />)));
   });
 
   // Register
-  app.get("/register", function(req, res) {
+  app.get("/register", function (req, res) {
     if (req.user) {
       res.redirect("/account");
 
       return;
     }
 
-    res.render("register");
+    res.send(utils.html(ReactDOMServer.renderToString(<RegisterView />)));
   });
 
   // Register (submit)
-  app.post("/register", function(req, res) {
+  app.post("/register", function (req, res) {
     let clean = {};
 
     if(!validators.isValidEmail(req.body.email)) {
-      res.render("registerpost", {
-        message: "That's not a valid email address."
-      });
+      res.send(utils.html(ReactDOMServer.renderToString(<RegisterView message="That's not a valid email address." />)));
 
       return;
     }
@@ -136,28 +143,22 @@ app.listen(port, function () {
     clean.email = req.body.email;
 
     if(!validators.isValidPassword(req.body.password)) {
-      res.render("registerpost", {
-        message: "Please enter a password."
-      });
+      res.send(utils.html(ReactDOMServer.renderToString(<RegisterView message="Please enter a password." />)));
 
       return;
     }
 
-    utils.hashItem(req.body.password).then(function(hashedItem) {
+    utils.hashItem(req.body.password).then(function (hashedItem) {
       clean.password = hashedItem;
       const params = [clean.email, clean.password];
 
-      utils.query(dbConnection, registerSql, params).then(function() {
+      utils.query(dbConnection, registerSql, params).then(function () {
         res.redirect("/login");
-      }).catch(function(error) {
-        res.render("registerpost", {
-          message: "Couldn't create user: " + error
-        });
+      }).catch(function (error) {
+        res.send(utils.html(ReactDOMServer.renderToString(<RegisterView message={"Couldn't create user: " + error} />)));
       })
-    }).catch(function(error) {
-      res.render("registerpost", {
-        message: "Couldn't hash password."
-      });
+    }).catch(function (error) {
+      res.send(utils.html(ReactDOMServer.renderToString(<RegisterView message="Couldn't hash password." />)));
     });
 
     return;
@@ -171,7 +172,7 @@ app.listen(port, function () {
       return;
     }
 
-    res.render("login");
+    res.send(utils.html(ReactDOMServer.renderToString(<LoginView />)));
   });
 
   // Login (submit)
@@ -195,28 +196,81 @@ app.listen(port, function () {
       return;
     }
 
-    res.render("account");
+    res.send(utils.html(ReactDOMServer.renderToString(<AccountView />)));
   });
 
   app.get("/addrecipe", function (req, res) {
-    // if (!req.user) {
-    //   res.redirect("/login");
+    if (!req.user) {
+      res.redirect("/login");
 
-    //   return;
-    // }
+      return;
+    }
 
-    res.render("addrecipe");
+    res.send(utils.html(ReactDOMServer.renderToString(<AddRecipeView />)));
+  });
+
+  app.post("/addrecipe", function (req, res) {
+    if (!req.user) {
+      res.redirect("/login");
+
+      return;
+    }
+
+    let clean = {};
+
+    if(!validators.isNotEmpty(req.body.recipename)) {
+      res.send(utils.html(ReactDOMServer.renderToString(<AddRecipeView message="Please add a recipe name." />)));
+
+      return;
+    } 
+
+    clean.recipeName = req.body.recipename;
+
+    if(!validators.isNotEmpty(req.body.category)) {
+      res.send(utils.html(ReactDOMServer.renderToString(<AddRecipeView message="Please choose a category." />)));
+
+      return;
+    } 
+
+    clean.category = req.body.category;
+
+    if(!validators.isNotEmpty(req.body.ingredients)) {
+      res.send(utils.html(ReactDOMServer.renderToString(<AddRecipeView message="Please add some ingredients." />)));
+
+      return;
+    } 
+
+    clean.ingredients = req.body.ingredients;
+
+    if(!validators.isNotEmpty(req.body.steps)) {
+      res.send(utils.html(ReactDOMServer.renderToString(<AddRecipeView message="Please add the preparation steps." />)));
+
+      return;
+    } 
+
+    clean.steps = req.body.steps;
+
+    const params = [req.user.id, clean.recipeName, clean.category, clean.ingredients, clean.steps];
+
+    utils.query(dbConnection, addRecipeSql, params).then(function (result) {
+      const recipeId = result.insertId;
+      res.redirect("/recipe/" + recipeId);
+    }).catch(function (error) {
+      res.send(utils.html(ReactDOMServer.renderToString(<AddRecipeView message={"Couldn't create recipe: " + error} />)));
+    })
   });
 
   app.get("/recipedetail", function (req, res) {
-    // if (!req.user) {
-    //   res.redirect("/login");
+    if (!req.user) {
+      res.redirect("/login");
 
-    //   return;
-    // }
+      return;
+    }
 
-    res.render("recipedetail");
+    res.send(utils.html(ReactDOMServer.renderToString(<RecipeDetailView />)));
   });
+
+  app.get("/recipe/:id", function (req, res) {
+    // do recipe detail view
+  })
 });
-
-
