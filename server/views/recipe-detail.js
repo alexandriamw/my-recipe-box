@@ -43,7 +43,6 @@ module.exports = function (props) {
         </div>
         <div className="recDetailBtns">
           <button className="smallerBtn" type="button">Edit Recipe</button>
-          <button className="smallerBtn" type="button">Delete Recipe</button>
           <a href="/account" className="smallerBtn" type="button">Back to Account</a>
         </div>
       </div>

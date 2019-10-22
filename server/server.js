@@ -27,6 +27,7 @@ const registerSql = require("./queries/register");
 const getUserByEmailSql = require("./queries/get-user-by-email");
 const getUserByIdSql = require("./queries/get-user-by-id");
 const addRecipeSql = require("./queries/add-recipe");
+const updateRecipeSql = require("./queries/update-recipe");
 const getRecipeSql = require("./queries/get-recipe");
 
 // Database connection
@@ -278,4 +279,106 @@ app.listen(port, function () {
       res.send(utils.html(ReactDOMServer.renderToString(<RecipeDetailView message={"Couldn't get recipe: " + error} />)));
     });
   })
+
+  app.get("/edit/:id", function (req, res) {
+    if (!req.user) {
+      res.redirect("/login");
+
+      return;
+    }
+
+    if (!validators.isNumber(req.params.id)) {
+      res.send(utils.html(ReactDOMServer.renderToString(<AddRecipeView message="Please provide a valid recipe ID." />)));
+
+      return;
+    }
+
+    const params = [req.params.id];
+
+    utils.query(dbConnection, getRecipeSql, params).then(function (result) {
+      const recipeData = result[0];
+
+      if (recipeData["user_id"] !== req.user.id) {
+        res.redirect("/recipe/" + req.params.id);
+
+        return;
+      }
+
+      res.send(utils.html(ReactDOMServer.renderToString(<AddRecipeView mode="edit" recipeId={req.params.id} name={recipeData.name} category={recipeData.category} ingredients={recipeData.ingredients} steps={recipeData.steps} />)));
+    }).catch(function (error) {
+      res.send(utils.html(ReactDOMServer.renderToString(<AddRecipeView message={"Couldn't get recipe: " + error} />)));
+    });
+  });
+
+  app.post("/edit/:id", function (req, res) {
+    if (!req.user) {
+      res.redirect("/login");
+
+      return;
+    }
+
+    let clean = {};
+
+    if (!validators.isNumber(req.params.id)) {
+      res.send(utils.html(ReactDOMServer.renderToString(<AddRecipeView message="Please provide a valid recipe ID." />)));
+
+      return;
+    }
+
+    clean.recipeId = req.params.id;
+
+    const params = [clean.recipeId];
+
+    utils.query(dbConnection, getRecipeSql, params).then(function (result) {
+      const recipeData = result[0];
+
+      if (recipeData["user_id"] !== req.user.id) {
+        res.redirect("/recipe/" + clean.recipeId);
+
+        return;
+      }
+      
+      if(!validators.isNotEmpty(req.body.recipename)) {
+        res.send(utils.html(ReactDOMServer.renderToString(<AddRecipeView mode="edit" recipeId={req.params.id} name={recipeData.name} category={recipeData.category} ingredients={recipeData.ingredients} steps={recipeData.steps} message="Please add a recipe name." />)));
+  
+        return;
+      } 
+  
+      clean.recipeName = req.body.recipename;
+  
+      if(!validators.isNotEmpty(req.body.category)) {
+        res.send(utils.html(ReactDOMServer.renderToString(<AddRecipeView mode="edit" recipeId={req.params.id} name={recipeData.name} category={recipeData.category} ingredients={recipeData.ingredients} steps={recipeData.steps} message="Please choose a category." />)));
+  
+        return;
+      } 
+  
+      clean.category = req.body.category;
+  
+      if(!validators.isNotEmpty(req.body.ingredients)) {
+        res.send(utils.html(ReactDOMServer.renderToString(<AddRecipeView mode="edit" recipeId={req.params.id} name={recipeData.name} category={recipeData.category} ingredients={recipeData.ingredients} steps={recipeData.steps} message="Please add some ingredients." />)));
+  
+        return;
+      } 
+  
+      clean.ingredients = req.body.ingredients;
+  
+      if(!validators.isNotEmpty(req.body.steps)) {
+        res.send(utils.html(ReactDOMServer.renderToString(<AddRecipeView mode="edit" recipeId={req.params.id} name={recipeData.name} category={recipeData.category} ingredients={recipeData.ingredients} steps={recipeData.steps} message="Please add the preparation steps." />)));
+  
+        return;
+      } 
+  
+      clean.steps = req.body.steps;
+  
+      const params = [clean.recipeName, clean.category, clean.ingredients, clean.steps, clean.recipeId, req.user.id];
+  
+      utils.query(dbConnection, updateRecipeSql, params).then(function () {
+        res.redirect("/recipe/" + clean.recipeId);
+      }).catch(function (error) {
+        res.send(utils.html(ReactDOMServer.renderToString(<AddRecipeView mode="edit" recipeId={req.params.id} name={recipeData.name} category={recipeData.category} ingredients={recipeData.ingredients} steps={recipeData.steps} message={"Couldn't create recipe: " + error} />)));
+      });
+    }).catch(function (error) {
+      res.send(utils.html(ReactDOMServer.renderToString(<AddRecipeView mode="edit" recipeId={req.params.id} name={recipeData.name} category={recipeData.category} ingredients={recipeData.ingredients} steps={recipeData.steps} message={"Couldn't get recipe: " + error} />)));
+    });
+  });
 });

@@ -1,5 +1,7 @@
 module.exports = `
   SELECT
+    id,
+    user_id,
     name,
     category,
     ingredients,
