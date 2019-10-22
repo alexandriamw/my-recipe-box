@@ -1,27 +1,44 @@
 const React = require("react");
 
-module.exports = function () {
+module.exports = function (props) {
+  const recipeCategories = {
+    appetizers: "Appetizers",
+    bakedgoods: "Baked Goods",
+    breakfast: "Breakfast",
+    dessert: "Dessert",
+    drinks: "Drinks",
+    maindish: "Main Dish",
+    salad: "Salad",
+    sidedish: "Side Dish",
+    soupstew: "Soups and Stews",
+    other: "Other"
+  };
+
   return (
     <>
       <link rel="stylesheet" href="/css/recipedetail.css" />
       <div className="recipeDetail">
         <div>
-          <h3>Recipe Name:</h3>
+          <h2>{props.name}</h2>
         </div>
         <div>
           <h3>Category:</h3>
-          <p></p>
+          <p>{recipeCategories[props.category]}</p>
         </div>
         <div>
           <h3>Ingredients:</h3>
           <ul>
-            <li></li>
+            {props.ingredients.trim().split("\n").map(function (ingredient, index) {
+              return <li key={index}>{ingredient}</li>;
+            })}
           </ul>
         </div>
         <div>
           <h3>Preparation Steps:</h3>
           <ol>
-            <li></li>
+            {props.steps.trim().split("\n").map(function (step, index) {
+              return <li key={index}>{step}</li>;
+            })}
           </ol>
         </div>
         <div className="recDetailBtns">

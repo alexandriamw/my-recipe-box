@@ -27,6 +27,7 @@ const registerSql = require("./queries/register");
 const getUserByEmailSql = require("./queries/get-user-by-email");
 const getUserByIdSql = require("./queries/get-user-by-id");
 const addRecipeSql = require("./queries/add-recipe");
+const getRecipeSql = require("./queries/get-recipe");
 
 // Database connection
 const dbConnection = utils.createMysqlPool();
@@ -156,7 +157,7 @@ app.listen(port, function () {
         res.redirect("/login");
       }).catch(function (error) {
         res.send(utils.html(ReactDOMServer.renderToString(<RegisterView message={"Couldn't create user: " + error} />)));
-      })
+      });
     }).catch(function (error) {
       res.send(utils.html(ReactDOMServer.renderToString(<RegisterView message="Couldn't hash password." />)));
     });
@@ -260,17 +261,21 @@ app.listen(port, function () {
     })
   });
 
-  app.get("/recipedetail", function (req, res) {
-    if (!req.user) {
-      res.redirect("/login");
+  app.get("/recipe/:id", function (req, res) {
+    if (!validators.isNumber(req.params.id)) {
+      res.send(utils.html(ReactDOMServer.renderToString(<RecipeDetailView message="Please provide a valid recipe ID." />)));
 
       return;
     }
 
-    res.send(utils.html(ReactDOMServer.renderToString(<RecipeDetailView />)));
-  });
+    const params = [req.params.id];
 
-  app.get("/recipe/:id", function (req, res) {
-    // do recipe detail view
+    utils.query(dbConnection, getRecipeSql, params).then(function (result) {
+      const recipeData = result[0];
+
+      res.send(utils.html(ReactDOMServer.renderToString(<RecipeDetailView name={recipeData.name} category={recipeData.category} ingredients={recipeData.ingredients} steps={recipeData.steps} />)));
+    }).catch(function (error) {
+      res.send(utils.html(ReactDOMServer.renderToString(<RecipeDetailView message={"Couldn't get recipe: " + error} />)));
+    });
   })
 });
