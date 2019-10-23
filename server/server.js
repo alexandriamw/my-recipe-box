@@ -29,6 +29,7 @@ const getUserByIdSql = require("./queries/get-user-by-id");
 const addRecipeSql = require("./queries/add-recipe");
 const updateRecipeSql = require("./queries/update-recipe");
 const getRecipeSql = require("./queries/get-recipe");
+const getRecipeListSql = require("./queries/get-recipe-list");
 
 // Database connection
 const dbConnection = utils.createMysqlPool();
@@ -198,7 +199,13 @@ app.listen(port, function () {
       return;
     }
 
-    res.send(utils.html(ReactDOMServer.renderToString(<AccountView />)));
+    const params = [req.user.id];
+
+    utils.query(dbConnection, getRecipeListSql, params).then(function (results) {
+      res.send(utils.html(ReactDOMServer.renderToString(<AccountView recipes={results} />)));
+    }).catch(function (error) {
+      res.send(utils.html(ReactDOMServer.renderToString(<AccountView message={"Couldn't get recipe list: " + error} />)));
+    });
   });
 
   app.get("/addrecipe", function (req, res) {
@@ -259,7 +266,7 @@ app.listen(port, function () {
       res.redirect("/recipe/" + recipeId);
     }).catch(function (error) {
       res.send(utils.html(ReactDOMServer.renderToString(<AddRecipeView message={"Couldn't create recipe: " + error} />)));
-    })
+    });
   });
 
   app.get("/recipe/:id", function (req, res) {
@@ -274,7 +281,7 @@ app.listen(port, function () {
     utils.query(dbConnection, getRecipeSql, params).then(function (result) {
       const recipeData = result[0];
 
-      res.send(utils.html(ReactDOMServer.renderToString(<RecipeDetailView name={recipeData.name} category={recipeData.category} ingredients={recipeData.ingredients} steps={recipeData.steps} />)));
+      res.send(utils.html(ReactDOMServer.renderToString(<RecipeDetailView editable={req.user.id === recipeData["user_id"]} name={recipeData.name} category={recipeData.category} ingredients={recipeData.ingredients} steps={recipeData.steps} />)));
     }).catch(function (error) {
       res.send(utils.html(ReactDOMServer.renderToString(<RecipeDetailView message={"Couldn't get recipe: " + error} />)));
     });

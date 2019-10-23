@@ -1,5 +1,6 @@
 module.exports = `
   SELECT
+    id,
     name,
     category,
     ingredients,
@@ -8,4 +9,7 @@ module.exports = `
     recipes
   WHERE
     user_id = ?
+  ORDER BY
+    category
+  ASC
 `;

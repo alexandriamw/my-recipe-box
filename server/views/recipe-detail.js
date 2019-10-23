@@ -42,7 +42,7 @@ module.exports = function (props) {
           </ol>
         </div>
         <div className="recDetailBtns">
-          <button className="smallerBtn" type="button">Edit Recipe</button>
+          {props.editable ? <a href={"/edit/" + props.id} className="smallerBtn">Edit Recipe</a> : ""}
           <a href="/account" className="smallerBtn" type="button">Back to Account</a>
         </div>
       </div>
