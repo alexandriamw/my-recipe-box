@@ -108,7 +108,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Start server
-const port = CONSTANTS.IS_PRODUCTION ? "80" : "8080";
+const port = process.env.PORT || "8080";
 
 app.listen(port, function () {
   // Home
