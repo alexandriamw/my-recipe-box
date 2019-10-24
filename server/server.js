@@ -187,7 +187,7 @@ app.listen(port, function () {
   // Login (submit)
   app.post("/login", passport.authenticate("local", {
     failureRedirect: "/login"
-  }, () => console.log("WHAT IS GOING ON")), function (req, res) {
+  }, (e) => console.log("WHAT IS GOING ON", e)), function (req, res) {
     if (req.user) {
       res.redirect("/account");
 
