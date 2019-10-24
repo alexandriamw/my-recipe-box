@@ -28,7 +28,7 @@ module.exports = {
         user: CONSTANTS.MYSQL_USER,
         password: CONSTANTS.MYSQL_PASS,
         database: CONSTANTS.MYSQL_DB,
-        port: 8889
+        port: CONSTANTS.MYSQL_PORT
       });
     } catch (error) {
       throw error;

@@ -136,8 +136,10 @@ app.listen(port, function () {
   // Register (submit)
   app.post("/register", function (req, res) {
     let clean = {};
+    console.log("##### 0")
 
     if(!validators.isValidEmail(req.body.email)) {
+      console.log("##### 1")
       res.send(utils.html(ReactDOMServer.renderToString(<RegisterView message="That's not a valid email address." />)));
 
       return;
@@ -146,24 +148,28 @@ app.listen(port, function () {
     clean.email = req.body.email;
 
     if(!validators.isValidPassword(req.body.password)) {
+      console.log("##### 2")
       res.send(utils.html(ReactDOMServer.renderToString(<RegisterView message="Please enter a password." />)));
 
       return;
     }
-
+    console.log("##### 3")
     utils.hashItem(req.body.password).then(function (hashedItem) {
       clean.password = hashedItem;
       const params = [clean.email, clean.password];
-
+      console.log("##### 4")
       utils.query(dbConnection, registerSql, params).then(function () {
+        console.log("##### 5")
         res.redirect("/login");
       }).catch(function (error) {
+        console.log("##### 6")
         res.send(utils.html(ReactDOMServer.renderToString(<RegisterView message={"Couldn't create user: " + error} />)));
       });
     }).catch(function (error) {
+      console.log("##### 7")
       res.send(utils.html(ReactDOMServer.renderToString(<RegisterView message="Couldn't hash password." />)));
     });
-
+    console.log("##### 8")
     return;
   });
 
