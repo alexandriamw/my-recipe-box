@@ -55,6 +55,7 @@ module.exports = {
         <meta name="description" content="an app to catalog your recipes" />
         <link rel="stylesheet" href="/css/reset.css">
         <link rel="stylesheet" href="/css/style.css">
+        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
         <link href="https://fonts.googleapis.com/css?family=Kalam&display=swap" rel="stylesheet">
         <title>My Recipe Box</title>
         </head>
