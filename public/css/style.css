@@ -110,3 +110,7 @@ img {
     max-width: 300px;
     margin: 0 auto;
 }
+
+.emailInput {
+    margin-left: 44px;
+}

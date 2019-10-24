@@ -8,7 +8,7 @@ module.exports = function () {
         <form action="/login" method="POST">
           <div>
             <label htmlFor="email"><b>Email</b></label>
-            <input type="email" placeholder="Enter Email" name="email" required />
+            <input className="emailInput" type="email" placeholder="Enter Email" name="email" required />
           </div>
           <div>
             <label htmlFor="password" className="password"><b>Password</b></label>
