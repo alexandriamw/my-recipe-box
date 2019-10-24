@@ -16,7 +16,8 @@
     "react-dom": "^16.10.2"
   },
   "scripts": {
-    "dev": "npx nodemon --exec babel-node ./server/server.js"
+    "dev": "npx nodemon --exec babel-node ./server/server.js",
+    "start": "npx nodemon --exec babel-node ./server/server.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.4",
