@@ -187,7 +187,7 @@ app.listen(port, function () {
   // Login (submit)
   app.post("/login", passport.authenticate("local", {
     failureRedirect: "/login"
-  }, (e, a, b, c, d) => console.log("WHAT IS GOING ON", e, a, b, c, d)), function (req, res) {
+  }), function (req, res) {
     console.log("IT WORKED?")
     if (req.user) {
       res.redirect("/account");
@@ -288,7 +288,7 @@ app.listen(port, function () {
     utils.query(dbConnection, getRecipeSql, params).then(function (result) {
       const recipeData = result[0];
 
-      res.send(utils.html(ReactDOMServer.renderToString(<RecipeDetailView editable={req.user.id === recipeData["user_id"]} name={recipeData.name} category={recipeData.category} ingredients={recipeData.ingredients} steps={recipeData.steps} />)));
+      res.send(utils.html(ReactDOMServer.renderToString(<RecipeDetailView editable={req.user.id === recipeData["user_id"]} id={req.params.id} name={recipeData.name} category={recipeData.category} ingredients={recipeData.ingredients} steps={recipeData.steps} />)));
     }).catch(function (error) {
       res.send(utils.html(ReactDOMServer.renderToString(<RecipeDetailView message={"Couldn't get recipe: " + error} />)));
     });

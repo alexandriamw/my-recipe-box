@@ -62,7 +62,7 @@ module.exports = {
         <body>
           <div class="content">
             <header>
-              <h1 class="title">My Recipe Box</h1>
+              <h1 class="title"><a href="/">My Recipe Box</a></h1>
             </header>
             ${htmlString}
           </div>

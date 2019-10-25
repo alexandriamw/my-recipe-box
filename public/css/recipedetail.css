@@ -25,3 +25,13 @@ h3 {
     margin-top: 22px;
     margin-bottom: 12px;
 }
+
+.recipeDetail ol li {
+    list-style: decimal;
+    margin-left: 18px;
+}
+
+.recipeDetail ul li {
+    list-style: disc;
+    margin-left: 18px;
+}

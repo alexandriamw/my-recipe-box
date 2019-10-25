@@ -37,8 +37,12 @@ header {
 .title {
     font-size: 44px;
     font-weight: bold;
-    color: #4C331E;
     padding: 30px;
+}
+
+.title a {
+    color: #4C331E;
+    text-decoration: none;
 }
 
 .buttonStyle {
@@ -92,11 +96,10 @@ input {
     height: 60px;
     border-top: #417DAD solid 3px;
     display: flex;
-    flex-shrink: 0;
+    justify-content: center;
 }
 
 footer p {
-    align-content: flex-start;
     line-height: 60px;
     text-align: center;
 }

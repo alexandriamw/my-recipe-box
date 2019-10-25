@@ -30,8 +30,10 @@ h2 {
     margin-top: 8px;
 }
 
-a {
-    text-decoration: none;
-    color: #4C331E;
+.recipeList li {
     font-size: 18px;
+}
+
+.recipeList a {
+    color: #4C331E;
 }
