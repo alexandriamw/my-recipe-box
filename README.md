@@ -15,7 +15,4 @@ Create an account by entering your email and choosing a password. After you log 
 - [Node](https://nodejs.org/en/)
 - [Babel](https://www.npmjs.com/package/@babel/core)
 - [BCrypt](https://www.npmjs.com/package/bcrypt)
-
-
-   
-  
+- [Passport](http://www.passportjs.org/)
