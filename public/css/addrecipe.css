@@ -41,13 +41,6 @@ textarea {
     border-radius: 5px;
 }
 
-.addIngBtn {
-    background: #F4B74E;
-    font-family: 'Kalam', cursive;
-    padding-top: 4px;
-    border: none;
-    border-radius: 4px;
-    color: #4C331E;
-    cursor: pointer;
-    box-shadow: 2px 2px #D69B35;
+.saveBtn {
+    padding: 4px 12px;
 }

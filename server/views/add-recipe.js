@@ -34,7 +34,7 @@ module.exports = function (props) {
             <label htmlFor="steps">Preparation Steps</label>
             <textarea id="steps" name="steps" defaultValue={props.mode === "edit" ? props.steps : ""}></textarea>
           </div>
-          <button className="smallerBtn" type="submit">Save my Recipe</button>
+          <button className="smallerBtn saveBtn" type="submit">Save my Recipe</button>
           <a href="/account" className="smallerBtn" type="button">Back to Account</a>
         </form>
       </div>
