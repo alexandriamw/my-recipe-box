@@ -91,13 +91,15 @@ app.use(cookieParser());
 app.use(session({
   cookie: {
     path: "/",
-    httpOnly: false,
+    httpOnly: true,
+    saveUninitialized: true,
     secure: CONSTANTS.IS_PRODUCTION,
-    maxAge: null
+    maxAge: null,
   },
   resave: false,
   saveUninitialized: false,
-  secret: CONSTANTS.SESSION_SECRET
+  secret: CONSTANTS.SESSION_SECRET,
+  proxy: CONSTANTS.IS_PRODUCTION
 }));
 app.use(bodyParser.urlencoded({
   extended: true
